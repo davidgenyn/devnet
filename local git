@@ -1,0 +1,250 @@
+# Create local git
+PS C:\> mkdir gitta
+
+PS C:\> cd gitta
+# Create user login 
+PS C:\gitta> git config --global user.name "davidgenyn"
+PS C:\gitta> git config --global user.email "david.genyn@gmail.com"
+
+PS C:\gitta> git config --list
+diff.astextplain.textconv=astextplain    
+filter.lfs.clean=git-lfs clean -- %f     
+filter.lfs.smudge=git-lfs smudge -- %f   
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+http.sslbackend=openssl
+http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+core.autocrlf=true
+core.fscache=true
+core.symlinks=false
+pull.rebase=false
+credential.helper=manager-core
+credential.https://dev.azure.com.usehttppath=true
+init.defaultbranch=master
+core.editor="C:\Users\david\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+user.email=david.genyn@gmail.com
+user.name=davidgenyn
+safe.directory=C:/Git/test12
+
+# "git init' command will initialize git and additional folders:
+PS C:\gitta> git init
+Initialized empty Git repository in C:/gitta/.git/
+
+PS C:\gitta> cd .git
+PS C:\gitta\.git> dir
+
+
+    Directory: C:\gitta\.git
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         11/5/2022   5:03 PM                hooks
+d-----         11/5/2022   5:03 PM                info
+d-----         11/5/2022   5:03 PM                objects
+d-----         11/5/2022   5:03 PM                refs
+-a----         11/5/2022   5:03 PM            130 config
+-a----         11/5/2022   5:03 PM             73 description
+-a----         11/5/2022   5:03 PM             23 HEAD
+
+# I added the "index.html" file manually.
+  When I dir the "index.html" file is shown:
+PS C:\gitta> dir
+
+
+    Directory: C:\gitta
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        10/28/2022   7:03 PM            550 index.html
+
+
+# Stage to track the files:
+PS C:\gitta> git add index.html
+PS C:\gitta> git commit -m "initial commit"
+[master (root-commit) 9819d9f] initial commit
+ 1 file changed, 21 insertions(+)
+ create mode 100644 index.html
+ 
+# The text.txt was changed: 
+PS C:\gitta> git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\gitta> git add test.txt
+PS C:\gitta> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   test.txt
+
+PS C:\gitta> git commit -m "text.txt was changed"
+[master 62d6ae5] text.txt was changed
+ 1 file changed, 2 insertions(+)
+ 
+PS C:\gitta> git log --oneline
+093d053 (HEAD -> master) and thinking
+eac22ee Addes thinking
+26530f7 Removed thiniking
+62d6ae5 text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+
+# command to show the last 3 changes:
+PS C:\gitta> git log -n 3
+commit 093d053d60329ad67aca0c55a90d531477e7cef8 (HEAD -> master)
+Author: davidgenyn <david.genyn@gmail.com>
+Date:   Sat Nov 5 18:42:49 2022 +0100
+
+    and thinking
+
+commit eac22ee2deb20843a7deb22a11f62ad241106273
+Author: davidgenyn <david.genyn@gmail.com>
+Date:   Sat Nov 5 18:04:02 2022 +0100
+
+    Addes thinking
+
+commit 26530f7e83479759b41a52701821608b1a5bdfe8
+Author: davidgenyn <david.genyn@gmail.com>
+Date:   Sat Nov 5 18:02:20 2022 +0100
+
+    Removed thiniking
+
+# compare different files:
+PS C:\gitta> git diff
+diff --git a/test.txt b/test.txt
+index 85098cf..e778def 100644
+--- a/test.txt
++++ b/test.txt
+@@ -1,5 +1,7 @@
+ This is a new style of thinking.
+ Thinking and thinking and thinking.
++This is an additional line.
++
+
+# comparing two different hashes:
+PS C:\gitta> git log --oneline 
+093d053 (HEAD -> master) and thinking
+eac22ee Addes thinking
+26530f7 Removed thiniking
+62d6ae5 text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+PS C:\gitta> git diff 26530f7 24901fb
+diff --git a/test.txt b/test.txt
+index 9aa64ac..3cb0958 100644
+--- a/test.txt
++++ b/test.txt
+@@ -1,4 +1 @@
+ This is a new style of thinking.
+-Thinking.
+-
+-
+# the "checkout" command:
+PS C:\gitta> git log --oneline
+c42e416 (HEAD -> master) added py
+f37d628 changes
+093d053 and thinking
+eac22ee Addes thinking
+26530f7 Removed thiniking
+62d6ae5 text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+
+PS C:\gitta> git checkout 62d6ae5
+Note: switching to '62d6ae5'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 62d6ae5 text.txt was changed
+
+PS C:\gitta> git checkout master
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  3fd1d56 experimental change
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 3fd1d56
+
+Switched to branch 'master'
+
+# "amand" command replaces the head (5aa47ef replaced c42e416)
+PS C:\gitta> git log --oneline
+c42e416 (HEAD -> master) added py
+f37d628 changes
+093d053 and thinking
+eac22ee Addes thinking
+26530f7 Removed thiniking
+62d6ae5 text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+
+PS C:\gitta> git add test.txt
+PS C:\gitta> git commit --amend -m "(amended) added test.txt"
+[master 5aa47ef] (amended) added test.txt
+ Date: Sat Nov 5 19:19:29 2022 +0100
+ 2 files changed, 6 insertions(+)
+ create mode 100644 def.py
+ 
+ PS C:\gitta> git log --oneline
+5aa47ef (HEAD -> master) (amended) added test.txt
+f37d628 changes
+093d053 and thinking
+eac22ee Addes thinking
+26530f7 Removed thiniking
+62d6ae5 text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+
+# the reset command, resets to the given hash (62d6ae5):
+PS C:\gitta> git reset 62d6ae5
+Unstaged changes after reset:
+M       index.html
+M       test.txt
+
+PS C:\gitta> git log --oneline 
+62d6ae5 (HEAD -> master) text.txt was changed
+24901fb test.txt added
+9819d9f initial commit
+
+# revert delets files:
+PS C:\gitta> git revert HEAD -m "revert update"
+error: option `mainline' expects a number greater than zero
+PS C:\gitta> git revert head
+[master cda7817] Revert "update"
+ 3 files changed, 2 insertions(+), 13 deletions(-)
+ delete mode 100644 def.py
+ 
+ # unstage a file that is not yet commited:
+ PS C:\gitta> git restore --staged .\smurf.txt
+PS C:\gitta> git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   smurf.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
