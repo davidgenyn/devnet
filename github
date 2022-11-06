@@ -1,0 +1,46 @@
+# download from github:
+git clone https://github.com/davidgenyn/easy.git
+
+PS C:\easy> git remote -v
+origin  https://github.com/davidgenyn/easy.git (fetch)
+origin  https://github.com/davidgenyn/easy.git (push)
+PS C:\easy> git push origin
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (5/5), 781 bytes | 781.00 KiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/davidgenyn/easy.git
+   a4061c7..9850a42  main -> main
+   
+# switch to branch:
+PS C:\easy> git log --oneline
+b3d085f (HEAD -> main, origin/main, origin/HEAD) updating
+9850a42 initial commit
+a4061c7 update
+51362ed Initial commit
+
+PS C:\easy> git branch featureA
+PS C:\easy> git log --oneline
+b3d085f (HEAD -> main, origin/main, origin/HEAD, featureA) updating
+9850a42 initial commit
+a4061c7 update
+51362ed Initial commit
+PS C:\easy> git checkout featureA
+Switched to branch 'featureA'
+
+PS C:\easy> git log --oneline
+b3d085f (HEAD -> featureA, origin/main, origin/HEAD, main) updating
+9850a42 initial commit
+a4061c7 update
+51362ed Initial commit
+
+PS C:\easy> git status
+On branch featureA
+PS C:\easy> git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+
+
